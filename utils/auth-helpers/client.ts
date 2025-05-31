@@ -43,36 +43,24 @@ export async function signInWithOAuth(e: React.FormEvent<HTMLFormElement>) {
   });
 }
 
-export const checkUserStatus = async (
-  router: AppRouterInstance,
-  setLoading: (loading: boolean) => void
-) => {
+export async function signOut() {
   const supabase = createClient();
+
   try {
-    const { data } = await supabase.auth.getUser();
-    if (!data.user) {
-      router.push("/signin");
-      return;
-    }
+    await supabase.auth.signOut();
 
-    const userId = data.user.id;
+    // Clear all cookies
+    document.cookie.split(";").forEach((cookie) => {
+      const eqPos = cookie.indexOf("=");
+      const name = eqPos > -1 ? cookie.substr(0, eqPos).trim() : cookie.trim();
+      document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+    });
 
-    //  Check if signup is completed
-    const { data: profile, error: profileError } = await supabase
-      .from("users")
-      .select("signup_completed")
-      .eq("id", userId)
-      .single();
-
-    if (profileError || !profile?.signup_completed) {
-      router.push("/signin/signup");
-      return;
-    }
+    // Clear localStorage
+    localStorage.clear();
+    return await redirectToPath('/');
   } catch (error) {
-    console.error("Error checking user status:", error);
-    router.push("/signin");
-    return;
-  } finally {
-    setLoading(false);
+    // silently ignore errors or log if needed
+    console.error("Sign out error:", error);
   }
-};
+}
