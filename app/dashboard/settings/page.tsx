@@ -125,16 +125,16 @@ export default function Settings() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <Loader2 className="h-8 w-8 animate-spin text-upwork-gray-light" />
+        <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-7xl mx-auto space-y-8">
       <div>
-        <h2 className="text-2xl font-bold text-upwork-gray">Settings</h2>
-        <p className="mt-1 text-sm text-upwork-gray-light">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">Settings</h2>
+        <p className="text-gray-600">
           Manage your account settings and preferences
         </p>
       </div>
