@@ -17,14 +17,15 @@ export function ResponsePreview({ response }: ResponsePreviewProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6">
+    <>
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold text-upwork-gray">
+        <h2 className="text-lg font-semibold text-gray-900">
           Generated Response
         </h2>
         {response && (
           <Button
             variant="outline"
+            size="sm"
             onClick={copyToClipboard}
             className="flex items-center gap-2"
           >
@@ -36,19 +37,19 @@ export function ResponsePreview({ response }: ResponsePreviewProps) {
 
       {response ? (
         <div className="prose max-w-none">
-          <p className="whitespace-pre-wrap text-upwork-gray">{response}</p>
+          <p className="whitespace-pre-wrap text-gray-700">{response}</p>
         </div>
       ) : (
-        <div className="text-center py-12">
-          <MessageSquare className="h-12 w-12 text-upwork-gray-light mx-auto mb-4" />
-          <p className="text-upwork-gray">
+        <div className="flex flex-col items-center justify-center h-[500px] text-center">
+          <MessageSquare className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+          <p className="text-sm text-gray-900 font-medium">
             Your generated response will appear here
           </p>
-          <p className="text-sm text-upwork-gray-light mt-2">
+          <p className="text-xs text-gray-500 mt-1">
             Paste a client message and click "Generate Response" to get started
           </p>
         </div>
       )}
-    </div>
+    </>
   );
 }
