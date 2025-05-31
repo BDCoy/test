@@ -54,19 +54,13 @@ export default function PersonalizedTraining() {
   const [selectedModule, setSelectedModule] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  // Zustand store
-  const { moduleProgress, setModuleProgress, setCompleted } =
-    useTrainingStore();
+  const { moduleProgress, setModuleProgress, setCompleted } = useTrainingStore();
 
-  // Function to handle module click
   const handleModuleClick = (index: number) => setSelectedModule(index);
 
-  // Function to toggle completion of a module
   const toggleCompleteModule = (index: number) => {
     const newCompleted = !moduleProgress[index];
     setModuleProgress(index, newCompleted);
-
-    // Calculate if all modules are completed
     setCompleted(newCompleted);
   };
 
@@ -80,36 +74,35 @@ export default function PersonalizedTraining() {
     }, 2000);
   };
 
-  // Effect to set the last completed module as the selected module
   useEffect(() => {
     const lastCompletedModuleIndex = moduleProgress
       .map((completed, index) => (completed ? index : -1))
       .filter((index) => index !== -1)
-      .pop(); // Get the last completed module index
+      .pop();
 
     if (lastCompletedModuleIndex !== undefined) {
       setSelectedModule(lastCompletedModuleIndex);
     } else {
-      setSelectedModule(0); // Default to the first module if no module is completed
+      setSelectedModule(0);
     }
   }, [moduleProgress]);
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-7xl mx-auto space-y-8">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-upwork-gray">
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">
             Personalized Training
           </h1>
-          <p className="mt-1 text-sm text-upwork-gray-light">
+          <p className="text-gray-600">
             Improve your skills with tailored training modules.
           </p>
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row space-y-6 sm:space-y-0 sm:space-x-6">
-        <div className="w-full sm:w-1/3 space-y-4 bg-white h-min rounded-lg shadow-sm p-6">
-          <h2 className="text-xl font-semibold text-upwork-gray">
+      <div className="flex flex-col sm:flex-row space-y-6 sm:space-y-0 sm:space-x-8">
+        <div className="w-full sm:w-1/3 bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">
             Course Modules
           </h2>
           <ModuleList
@@ -121,7 +114,7 @@ export default function PersonalizedTraining() {
           />
         </div>
 
-        <div className="flex-1 bg-white rounded-lg shadow-sm p-6">
+        <div className="flex-1 bg-white rounded-xl shadow-sm border border-gray-100 p-6">
           {selectedModule !== null ? (
             <ModuleContent
               title={trainingModules[selectedModule].title}
