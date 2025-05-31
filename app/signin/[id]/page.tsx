@@ -31,8 +31,9 @@ export default async function SignIn({
   if (typeof params.id === "string" && viewTypes.includes(params.id)) {
     viewProp = params.id;
   } else {
-    const preferredSignInView =
-      cookies().get("preferredSignInView")?.value || null;
+    // const preferredSignInView =
+    //   cookies().get("preferredSignInView")?.value || null;
+       const preferredSignInView =  null;
     viewProp = getDefaultSignInView(preferredSignInView);
     return redirect(`/signin/${viewProp}`);
   }
