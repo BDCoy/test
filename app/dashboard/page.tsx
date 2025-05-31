@@ -24,6 +24,7 @@ const Dashboard: React.FC = () => {
         getUserDetails(supabase),
         getSubscription(supabase),
       ]);
+      console.log(userData);
       setUser(userData);
       setSubscription(subscriptionData);
     } catch (error) {
