@@ -1,16 +1,13 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
-
 import { CVUploader } from "@/components/cover-letter/CVUploader";
 import { JobDescriptionForm } from "@/components/ats-optimizer/JobDescriptionForm";
 import { ActionButtons } from "@/components/ats-optimizer/ActionButtons";
 import { AnalysisResult } from "@/components/ats-optimizer/AnalysisResult";
 import { useATSOptimizerStore } from "@lib/store/ats-optimizer";
 import { RefreshCw } from "lucide-react";
-
 import { generateATSRecommendations } from "@/lib/openai/ats-optimizer";
-
 import { SubscriptionModal } from "@/components/shared/SubscriptionModal";
 import { createClient } from "@/utils/supabase/client";
 import { User } from "@supabase/supabase-js";
@@ -37,7 +34,6 @@ export default function ATSOptimizer() {
   } = useATSOptimizerStore();
 
   const [subscription, setSubscription] = useState<any | null>(null);
-
   const [isGenerating, setIsGenerating] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -75,7 +71,7 @@ export default function ATSOptimizer() {
     if (!user) {
       throw Error("Please signin to continue");
     }
-    // Check subscription status
+
     const isSubscriptionValid = await checkSubscriptionStatus(
       user.id,
       subscription,
@@ -89,10 +85,7 @@ export default function ATSOptimizer() {
 
     try {
       setIsGenerating(true);
-      const analysis = await generateATSRecommendations(
-        cvContent,
-        jobDescription
-      );
+      const analysis = await generateATSRecommendations(cvContent, jobDescription);
       setAnalysis(analysis);
       toast.success("ATS analysis generated successfully!");
 
@@ -109,16 +102,13 @@ export default function ATSOptimizer() {
 
       const newCount = (data?.ats_optimizer_count || 0) + 1;
 
-      const { error } = await supabase.functions.invoke(
-        "update-profile-count", // Name of the edge function
-        {
-          body: {
-            analysisType: "ats_optimizer_count", // Specify the analysis type
-            user_id: user.id, // Pass the user_id to the Edge Function
-            new_count: newCount, // Pass the new count
-          },
-        }
-      );
+      const { error } = await supabase.functions.invoke("update-profile-count", {
+        body: {
+          analysisType: "ats_optimizer_count",
+          user_id: user.id,
+          new_count: newCount,
+        },
+      });
 
       if (error) {
         console.error("Error invoking edge function:", error);
@@ -127,9 +117,7 @@ export default function ATSOptimizer() {
     } catch (error) {
       console.error(error);
       toast.error(
-        error instanceof Error
-          ? error.message
-          : "Failed to generate ATS analysis"
+        error instanceof Error ? error.message : "Failed to generate ATS analysis"
       );
     } finally {
       setIsGenerating(false);
@@ -144,17 +132,15 @@ export default function ATSOptimizer() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-7xl mx-auto space-y-8">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-upwork-gray">
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">
             ATS Resume Optimizer
           </h1>
-          <p className="mt-1 text-sm text-upwork-gray-light">
-            {atsAnalysis
-              ? "Review your ATS analysis and optimization suggestions below."
-              : "Upload your CV and enter the job description to get a detailed ATS analysis with actionable tips."}
+          <p className="text-gray-600">
+            Upload your CV and enter the job description to get a detailed ATS analysis with actionable tips.
           </p>
         </div>
         {atsAnalysis && (
@@ -169,11 +155,10 @@ export default function ATSOptimizer() {
         )}
       </div>
 
-      {/* Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Form Section */}
-        <div className="space-y-4">
-          <div className="bg-white rounded-lg shadow-sm p-6">
+        <div className="space-y-6">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
             <CVUploader
               cvContent={cvContent}
               onFileChange={handleFileChange}
@@ -194,27 +179,26 @@ export default function ATSOptimizer() {
           />
         </div>
 
-        {/* Preview Section - Fixed height and scrollable */}
-        <div className="h-[calc(100vh-12rem)] sticky top-24">
+        {/* Preview Section */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
           {atsAnalysis ? (
-            <div className="h-full overflow-y-auto bg-white rounded-lg shadow-sm">
-              <AnalysisResult analysis={atsAnalysis} />
-            </div>
+            <AnalysisResult analysis={atsAnalysis} />
           ) : (
-            <div className="bg-white rounded-lg shadow-sm p-6 h-full flex items-center justify-center">
-              <div className="text-center text-upwork-gray-light">
-                <p className="text-lg mb-2">
-                  Your ATS analysis will appear here
-                </p>
-                <p className="text-sm">
-                  Upload your CV and enter the job description to get started
-                </p>
+            <div className="flex flex-col items-center justify-center h-[600px] text-center">
+              <div className="space-y-4">
+                <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-auto">
+                  <RefreshCw className="w-6 h-6 text-gray-400" />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-900 font-medium">Your ATS analysis will appear here</p>
+                  <p className="text-xs text-gray-500 mt-1">Upload your CV and enter the job description to get started</p>
+                </div>
               </div>
             </div>
           )}
         </div>
       </div>
-      {/* Subscription Modal */}
+
       <SubscriptionModal
         isOpen={showSubscriptionModal}
         onClose={() => setShowSubscriptionModal(false)}
