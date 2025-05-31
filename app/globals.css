@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.custom-phone-input-button:hover {
+  background-color: transparent;
+}
+
+.react-tel-input .selected-flag:hover,
+.react-tel-input .selected-flag:focus,
+.react-tel-input .selected-flag.open {
+  background-color: transparent !important;
+}
+
+.react-tel-input .flag-dropdown.open {
+  background-color: transparent !important;
+}
+
+.react-tel-input .country-list {
+  @apply shadow-lg border border-gray-200 rounded-lg;
+}
+
+.react-tel-input .country-list .country:hover {
+  @apply bg-white;
+}
+
+.react-tel-input .country-list .country.highlight {
+  @apply bg-white;
+}
+
+@keyframes slide-in-from-right-5 {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-in {
+  animation: slide-in-from-right-5 0.3s ease-out;
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
