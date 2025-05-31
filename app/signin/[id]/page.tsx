@@ -1,17 +1,17 @@
-import { createClient } from '@/utils/supabase/server';
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+import { createClient } from "@/utils/supabase/server";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import {
   getAuthTypes,
   getViewTypes,
   getDefaultSignInView,
   getRedirectMethod,
-} from '@/utils/auth-helpers/settings';
-import { AuthLayout } from '@/components/AuthLayout';
-import PasswordSignIn from '@/components/ui/AuthForms/PasswordSignIn';
-import ForgotPassword from '@/components/ui/AuthForms/ForgotPassword';
-import UpdatePassword from '@/components/ui/AuthForms/UpdatePassword';
-import SignUp from '@/components/ui/AuthForms/Signup';
+} from "@/utils/auth-helpers/settings";
+import { AuthLayout } from "@/components/AuthLayout";
+import PasswordSignIn from "@/components/ui/AuthForms/PasswordSignIn";
+import ForgotPassword from "@/components/ui/AuthForms/ForgotPassword";
+import UpdatePassword from "@/components/ui/AuthForms/UpdatePassword";
+import SignUp from "@/components/ui/AuthForms/Signup";
 
 export default async function SignIn({
   params,
@@ -24,16 +24,21 @@ export default async function SignIn({
   const viewTypes = getViewTypes();
   const redirectMethod = getRedirectMethod();
 
+  // Declare 'viewProp' and initialize with the default value
   let viewProp: string;
 
+  // Assign url id to 'viewProp' if it's a valid string and ViewTypes includes it
   if (typeof params.id === "string" && viewTypes.includes(params.id)) {
     viewProp = params.id;
   } else {
-    const preferredSignInView = cookies().get('preferredSignInView')?.value || null;
+    // const preferredSignInView =
+    //   cookies().get("preferredSignInView")?.value || null;
+       const preferredSignInView =  null;
     viewProp = getDefaultSignInView(preferredSignInView);
     return redirect(`/signin/${viewProp}`);
   }
 
+  // Check if the user is already logged in and redirect to the account page if so
   const supabase = createClient();
 
   const {
