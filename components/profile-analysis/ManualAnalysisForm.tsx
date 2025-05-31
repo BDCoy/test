@@ -18,32 +18,32 @@ export function ManualAnalysisForm({
 }) {
   return (
     <div className="bg-white rounded-lg shadow-sm p-6">
-      <h2 className="text-lg font-semibold text-upwork-gray mb-4">
+      <h2 className="text-lg font-semibold text-gray-800 mb-4">
         Manual Analysis
       </h2>
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-upwork-gray mb-2">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
             Profile Title
           </label>
           <input
             type="text"
             value={currentHeadline}
             onChange={(e) => setCurrentHeadline(e.target.value)}
-            className="w-full rounded-md border-upwork-gray-lighter focus:border-upwork-green focus:ring-upwork-green"
+            className="w-full rounded-md border border-gray-200 focus:border-green-500 focus:ring-green-500"
             placeholder="Enter your current Upwork profile title"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-upwork-gray mb-2">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
             Profile Description
           </label>
           <textarea
             value={currentDescription}
             onChange={(e) => setCurrentDescription(e.target.value)}
             rows={8}
-            className="w-full rounded-md border-upwork-gray-lighter focus:border-upwork-green focus:ring-upwork-green resize-none"
+            className="w-full rounded-md border border-gray-200 focus:border-green-500 focus:ring-green-500 resize-none"
             placeholder="Enter your current Upwork profile description"
           />
         </div>

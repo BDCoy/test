@@ -8,12 +8,12 @@ export function TabNavigation({
   setActiveTab: (tab: "url" | "manual") => void;
 }) {
   return (
-    <div className="flex space-x-4 border-b border-upwork-background">
+    <div className="flex space-x-4 border-b border-gray-200">
       <button
         className={`pb-4 px-2 font-medium transition-colors ${
           activeTab === "url"
-            ? "text-upwork-green border-b-2 border-upwork-green"
-            : "text-upwork-gray-light hover:text-upwork-gray"
+            ? "text-green-600 border-b-2 border-green-600"
+            : "text-gray-500 hover:text-gray-700"
         }`}
         onClick={() => setActiveTab("url")}
       >
@@ -25,8 +25,8 @@ export function TabNavigation({
       <button
         className={`pb-4 px-2 font-medium transition-colors ${
           activeTab === "manual"
-            ? "text-upwork-green border-b-2 border-upwork-green"
-            : "text-upwork-gray-light hover:text-upwork-gray"
+            ? "text-green-600 border-b-2 border-green-600"
+            : "text-gray-500 hover:text-gray-700"
         }`}
         onClick={() => setActiveTab("manual")}
       >

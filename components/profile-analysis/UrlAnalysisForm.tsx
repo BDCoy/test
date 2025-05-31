@@ -32,46 +32,41 @@ export function UrlAnalysisForm({
   showResults: boolean;
   handleViewResults: () => void;
 }) {
-  // Function to copy the example URL to clipboard with a success notification.
   const handleCopyExampleUrl = () => {
     navigator.clipboard.writeText(exampleUrl);
-    // toast.success("URL copied!");
   };
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-6">
-      <h2 className="text-lg font-semibold text-upwork-gray mb-4">
+      <h2 className="text-lg font-semibold text-gray-800 mb-4">
         Analyze by Upwork Profile URL
       </h2>
       <div className="space-y-4">
-        {/* Input Group with Copy Icon and Example URL */}
         <div>
-    
           <div className="flex">
             <input
               type="url"
               value={profileUrl}
               onChange={(e) => setProfileUrl(e.target.value)}
-              className="flex-1 rounded-md border border-upwork-gray-lighter focus:border-upwork-green focus:ring-upwork-green p-2"
+              className="flex-1 rounded-md border border-gray-200 focus:border-green-500 focus:ring-green-500 p-2"
               placeholder={exampleUrl}
             />
             <button
               type="button"
               title="Copy example URL"
-              className="ml-2 p-2 border border-upwork-gray-lighter rounded-md hover:bg-upwork-background"
+              className="ml-2 p-2 border border-gray-200 rounded-md hover:bg-gray-50"
               onClick={handleCopyExampleUrl}
             >
               <Copy className="w-5 h-5" />
             </button>
           </div>
-          <small className="text-xs text-upwork-gray-light mt-1">
+          <small className="text-xs text-gray-500 mt-1">
             Example URL: {exampleUrl}
           </small>
         </div>
 
-        {/* Profile Preview Card */}
         {profileData && !showResults && (
-          <div className="mt-6 p-4 bg-upwork-background rounded-lg">
+          <div className="mt-6 p-4 bg-gray-50 rounded-lg">
             <div className="flex items-center space-x-4">
               {profileData.ProfileImageSrc ? (
                 <img
@@ -80,49 +75,49 @@ export function UrlAnalysisForm({
                   className="w-16 h-16 rounded-full"
                 />
               ) : (
-                <div className="w-16 h-16 rounded-full bg-upwork-gray-lighter flex items-center justify-center">
-                  <User className="w-8 h-8 text-white" />
+                <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center">
+                  <User className="w-8 h-8 text-gray-400" />
                 </div>
               )}
               <div>
-                <h3 className="font-semibold text-upwork-gray">
+                <h3 className="font-semibold text-gray-800">
                   {profileData.Name}
                 </h3>
-                <p className="text-sm text-upwork-gray-light">
+                <p className="text-sm text-gray-500">
                   {profileData.Headline}
                 </p>
               </div>
             </div>
             <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
               <div>
-                <span className="text-upwork-gray-light">Country:</span>
-                <span className="ml-2 text-upwork-gray">
+                <span className="text-gray-500">Country:</span>
+                <span className="ml-2 text-gray-800">
                   {profileData.Country}
                 </span>
               </div>
               <div>
-                <span className="text-upwork-gray-light">Rate:</span>
-                <span className="ml-2 text-upwork-gray">
+                <span className="text-gray-500">Rate:</span>
+                <span className="ml-2 text-gray-800">
                   {profileData.HourlyRate}
                 </span>
               </div>
               <div>
-                <span className="text-upwork-gray-light">Jobs:</span>
-                <span className="ml-2 text-upwork-gray">
+                <span className="text-gray-500">Jobs:</span>
+                <span className="ml-2 text-gray-800">
                   {profileData.TotalJobs}
                 </span>
               </div>
               <div>
-                <span className="text-upwork-gray-light">Hours:</span>
-                <span className="ml-2 text-upwork-gray">
+                <span className="text-gray-500">Hours:</span>
+                <span className="ml-2 text-gray-800">
                   {profileData.TotalHours}
                 </span>
               </div>
             </div>
             <div className="mt-4 grid grid-cols-1 gap-4 text-sm">
               <div>
-                <span className="text-upwork-gray-light">Description:</span>
-                <span className="ml-2 text-upwork-gray">
+                <span className="text-gray-500">Description:</span>
+                <span className="ml-2 text-gray-800">
                   {profileData.Body}
                 </span>
               </div>
@@ -130,7 +125,6 @@ export function UrlAnalysisForm({
           </div>
         )}
 
-        {/* Analyze / View Results Button */}
         <Button
           onClick={
             profileData && !showResults ? handleViewResults : handleUrlAnalysis
