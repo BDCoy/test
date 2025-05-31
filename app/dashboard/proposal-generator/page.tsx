@@ -74,7 +74,7 @@ export default function ProposalGenerator() {
     if (!user) {
       throw Error("Please signin to continue");
     }
-    // Check subscription status
+
     const isSubscriptionValid = await checkSubscriptionStatus(
       user.id,
       subscription,
@@ -111,29 +111,17 @@ export default function ProposalGenerator() {
 
       const newCount = (data?.proposal_generator_count || 0) + 1;
 
-      const { error } = await supabase.functions.invoke(
-        "update-profile-count", // Name of the edge function
-        {
-          body: {
-            analysisType: "proposal_generator_count", // Specify the analysis type
-            user_id: user.id, // Pass the user_id to the Edge Function
-            new_count: newCount, // Pass the new count
-          },
-        }
-      );
+      const { error } = await supabase.functions.invoke("update-profile-count", {
+        body: {
+          analysisType: "proposal_generator_count",
+          user_id: user.id,
+          new_count: newCount,
+        },
+      });
 
       if (error) {
         console.error("Error invoking edge function:", error);
         return;
-      }
-
-      const { error: updateError } = await supabase
-        .from("users")
-        .update({ proposal_generator_count: newCount })
-        .eq("id", user?.id);
-
-      if (updateError) {
-        console.error("Database update error:", updateError);
       }
     } catch (error) {
       console.error("Error generating proposal:", error);
@@ -143,19 +131,15 @@ export default function ProposalGenerator() {
     }
   };
 
-  const handleAddQuestion = () => {
-    addQuestion("");
-  };
-
   return (
-    <div className="space-y-6">
+    <div className="max-w-7xl mx-auto space-y-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-upwork-gray">
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">
             Proposal Generator
           </h1>
-          <p className="mt-1 text-sm text-upwork-gray-light">
+          <p className="text-gray-600">
             Generate winning proposals tailored to specific job requirements
           </p>
         </div>
@@ -171,8 +155,7 @@ export default function ProposalGenerator() {
         )}
       </div>
 
-      {/* Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Form Section */}
         <div>
           <ProposalForm
@@ -186,35 +169,32 @@ export default function ProposalGenerator() {
             onProfileDescriptionChange={setProfileDescription}
             onJobDescriptionChange={setJobDescription}
             onToneChange={setTone}
-            onAddQuestion={handleAddQuestion}
+            onAddQuestion={addQuestion}
             onRemoveQuestion={removeQuestion}
             onUpdateQuestion={updateQuestion}
             onGenerate={handleGenerate}
           />
         </div>
 
-        {/* Preview Section - Fixed height and scrollable */}
-        <div className="h-[calc(100vh-12rem)] sticky top-24">
+        {/* Preview Section */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
           {generatedProposal ? (
-            <div className="h-full overflow-y-auto">
-              <ProposalPreview proposal={generatedProposal} />
-            </div>
+            <ProposalPreview proposal={generatedProposal} />
           ) : (
-            <div className="bg-white rounded-lg shadow-sm p-6 h-full flex items-center justify-center">
-              <div className="text-center text-upwork-gray-light">
-                <p className="text-lg mb-2">
+            <div className="flex flex-col items-center justify-center h-[800px] text-center">
+              <div>
+                <p className="text-sm text-gray-900 font-medium">
                   Your generated proposal will appear here
                 </p>
-                <p className="text-sm">
-                  Fill in the form and click &quot;Generate Proposal&ldquo; to
-                  get started
+                <p className="text-xs text-gray-500 mt-1">
+                  Fill in the form and click "Generate Proposal" to get started
                 </p>
               </div>
             </div>
           )}
         </div>
       </div>
-      {/* Subscription Modal */}
+
       <SubscriptionModal
         isOpen={showSubscriptionModal}
         onClose={() => setShowSubscriptionModal(false)}
