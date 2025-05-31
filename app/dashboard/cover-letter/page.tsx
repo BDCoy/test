@@ -4,8 +4,6 @@ import { useCoverLetterStore } from "@lib/store/cover-letter";
 import { JobDetailsForm } from "@/components/cover-letter/JobDetailsForm";
 import { ActionButtons } from "@/components/cover-letter/ActionButtons";
 import { Preview } from "@/components/cover-letter/Preview";
-import type { FormData } from "@/components/cover-letter/types";
-import { createCoverLetter } from "@/lib/openai/cover-letter";
 import { SubscriptionModal } from "@/components/shared/SubscriptionModal";
 import { CVUploader } from "@/components/cover-letter/CVUploader";
 import {
@@ -56,7 +54,7 @@ export default function CoverLetter() {
     setCV(text);
   };
 
-  const handleFormChange = (field: keyof FormData, value: string) => {
+  const handleFormChange = (field: keyof typeof formData, value: string) => {
     setFormData({ ...formData, [field]: value });
   };
 
@@ -111,12 +109,12 @@ export default function CoverLetter() {
       const newCount = (data?.cover_letter_count || 0) + 1;
 
       const { error } = await supabase.functions.invoke(
-        "update-profile-count", // Name of the edge function
+        "update-profile-count",
         {
           body: {
-            analysisType: "cover_letter_count", // Specify the analysis type
-            user_id: user.id, // Pass the user_id to the Edge Function
-            new_count: newCount, // Pass the new count
+            analysisType: "cover_letter_count",
+            user_id: user.id,
+            new_count: newCount,
           },
         }
       );
@@ -140,18 +138,17 @@ export default function CoverLetter() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-7xl mx-auto space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-upwork-gray">
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">
           Cover Letter Generator
         </h1>
-        <p className="mt-1 text-sm text-upwork-gray-light">
-          Generate a professional cover letter tailored to your CV and the job
-          description
+        <p className="text-gray-600">
+          Generate a professional cover letter tailored to your CV and the job description
         </p>
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div className="space-y-6">
           <CVUploader
             cvContent={cvContent}
@@ -169,9 +166,11 @@ export default function CoverLetter() {
           />
         </div>
 
-        <Preview generatedLetter={generatedLetter} />
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 min-h-[600px]">
+          <Preview generatedLetter={generatedLetter} />
+        </div>
       </div>
-      {/* Subscription Modal */}
+
       <SubscriptionModal
         isOpen={showSubscriptionModal}
         onClose={() => setShowSubscriptionModal(false)}

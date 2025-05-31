@@ -1,64 +1,67 @@
-import { Upload } from 'lucide-react';
+import { Upload, RefreshCw } from 'lucide-react';
 import type { PreviewProps } from './types';
-import { DownloadButton } from './DownloadButton';
+import { Button } from '../ui/Button';
 
 export function Preview({ generatedLetter }: PreviewProps) {
   return (
-    <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 min-h-[600px]">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-lg font-semibold text-upwork-gray">Generated Cover Letter</h2>
-        {generatedLetter && <DownloadButton generatedLetter={generatedLetter} />}
+    <>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-lg font-semibold text-gray-900">Generated Cover Letter</h2>
+        {generatedLetter && (
+          <Button variant="outline" size="sm">
+            <RefreshCw className="w-4 h-4 mr-2" />
+            Regenerate
+          </Button>
+        )}
       </div>
-
+      
       {generatedLetter ? (
         <div className="prose max-w-none">
-          <div className="mb-8 pb-8 border-b border-upwork-background">
-            <h3 className="text-xl font-bold text-upwork-gray">{generatedLetter.header.name}</h3>
-            <p className="text-upwork-gray-light">{generatedLetter.header.title}</p>
+          <div className="mb-8 pb-8 border-b border-gray-100">
+            <h3 className="text-xl font-bold text-gray-900">{generatedLetter.header.name}</h3>
+            <p className="text-gray-600">{generatedLetter.header.title}</p>
             {generatedLetter.header.contact.address && (
-              <p className="text-upwork-gray-light">{generatedLetter.header.contact.address}</p>
+              <p className="text-gray-600">{generatedLetter.header.contact.address}</p>
             )}
             {generatedLetter.header.contact.cityStateZip && (
-              <p className="text-upwork-gray-light">{generatedLetter.header.contact.cityStateZip}</p>
+              <p className="text-gray-600">{generatedLetter.header.contact.cityStateZip}</p>
             )}
             {generatedLetter.header.contact.phone && (
-              <p className="text-upwork-gray-light">{generatedLetter.header.contact.phone}</p>
+              <p className="text-gray-600">{generatedLetter.header.contact.phone}</p>
             )}
             {generatedLetter.header.contact.email && (
-              <p className="text-upwork-gray-light">{generatedLetter.header.contact.email}</p>
+              <p className="text-gray-600">{generatedLetter.header.contact.email}</p>
             )}
           </div>
 
-          <div className="mb-6 ">
-            <p className="font-medium text-upwork-gray">
+          <div className="mb-6">
+            <p className="font-medium text-gray-900">
               {generatedLetter.content.recipient.name}
               <br />
               {generatedLetter.content.recipient.company}
             </p>
           </div>
 
-          <p className="mb-6 text-upwork-gray">{generatedLetter.content.greeting}</p>
+          <p className="mb-6 text-gray-900">{generatedLetter.content.greeting}</p>
 
           {generatedLetter.content.paragraphs.map((paragraph: string, index: number) => (
-            <p key={index} className="mb-6 text-upwork-gray leading-relaxed text-justify">
+            <p key={index} className="mb-6 text-gray-900 leading-relaxed text-justify">
               {paragraph}
             </p>
           ))}
 
-          <div className="mt-8 pt-8 border-t border-upwork-background">
-            <p className="text-upwork-gray">{generatedLetter.content.closing.salutation},</p>
-            <p className="font-medium text-upwork-gray">{generatedLetter.content.closing.name}</p>
+          <div className="mt-8 pt-8 border-t border-gray-100">
+            <p className="text-gray-900">{generatedLetter.content.closing.salutation},</p>
+            <p className="font-medium text-gray-900">{generatedLetter.content.closing.name}</p>
           </div>
         </div>
       ) : (
-        <div className="text-center py-12">
-          <Upload className="h-12 w-12 text-upwork-gray-light mx-auto mb-4" />
-          <p className="text-upwork-gray">Your generated cover letter will appear here</p>
-          <p className="text-sm text-upwork-gray-light mt-2">
-            Upload your CV and fill in the job details to get started
-          </p>
+        <div className="flex flex-col items-center justify-center h-full text-center p-8">
+          <Upload className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+          <p className="text-sm text-gray-900 font-medium">Your generated cover letter will appear here</p>
+          <p className="text-xs text-gray-500 mt-1">Upload your CV and fill in the job details to get started</p>
         </div>
       )}
-    </div>
+    </>
   );
 }
