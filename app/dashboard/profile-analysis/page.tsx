@@ -213,12 +213,13 @@ export default function ProfileAnalysis() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-7xl mx-auto space-y-8">
       <AnalysisHeader analysis={analysis} reset={reset} />
-      <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+          <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
+
           {activeTab === "url" ? (
             <UrlAnalysisForm
               profileUrl={profileUrl}
@@ -241,8 +242,17 @@ export default function ProfileAnalysis() {
           )}
         </div>
 
-        <div className="h-[calc(100vh-12rem)] sticky top-24">
-          {analysis && <PreviewSection analysis={analysis} />}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 h-[calc(100vh-12rem)] sticky top-24 overflow-y-auto">
+          {analysis ? (
+            <PreviewSection analysis={analysis} />
+          ) : (
+            <div className="flex flex-col items-center justify-center h-full text-center text-gray-500">
+              <p className="text-lg mb-2">Your analysis results will appear here</p>
+              <p className="text-sm">
+                Enter your profile details and click "Analyze Profile" to get started
+              </p>
+            </div>
+          )}
         </div>
       </div>
 
