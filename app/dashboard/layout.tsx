@@ -1,12 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { Loader2 } from "lucide-react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Sidebar } from "@/components/dashboard/Sidebar";
-import { Navbar } from "@/components/dashboard/Navbar";
 import { TourModal } from "@/components/tour/TourModal";
-import { checkUserStatus } from "@/utils/auth-helpers/client";
 import { createClient } from "@/utils/supabase/client";
 
 export default function DashboardLayout({
@@ -16,7 +13,6 @@ export default function DashboardLayout({
 }) {
   const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
   const supabase = createClient();
 
   const handleSignOut = async () => {
@@ -25,18 +21,6 @@ export default function DashboardLayout({
     });
     router.push("/signin");
   };
-
-  useEffect(() => {
-    checkUserStatus(router, setLoading);
-  }, [router]);
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <Loader2 className="h-10 w-10 text-gray-500 animate-spin" />
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-upwork-background">
@@ -67,11 +51,6 @@ export default function DashboardLayout({
 
       {/* Main content */}
       <div className="flex flex-1 flex-col md:pl-64">
-        {/* <Navbar
-          onOpenSidebar={() => setIsMobileMenuOpen(true)}
-          onSignOut={handleSignOut}
-        /> */}
-
         <div className="flex-1 flex flex-col min-w-0">
           <main className="flex-1 p-4 md:p-8 overflow-x-hidden">
             {children}
