@@ -63,7 +63,7 @@ export default function CustomerPortalForm({ subscription }: Props) {
           `${subscriptionPrice}/${subscription?.prices?.interval}`
         ) : (
           <Link href="/dashboard/new-subscription">
-            <Button type="button" variant="secondary" loading={isSubmitting}>
+            <Button type="button\" variant="secondary\" loading={isSubmitting}>
               Choose your plan
             </Button>
           </Link>
