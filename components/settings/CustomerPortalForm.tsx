@@ -1,9 +1,6 @@
-"use client";
-
 import { useRouter, usePathname } from "next/navigation";
 import { useState } from "react";
 import { createStripePortal } from "@/utils/stripe/server";
-import Link from "next/link";
 import Card from "@/components/ui/Card";
 import { Tables } from "@/types_db";
 import { Button } from "../ui/Button";
@@ -61,7 +58,7 @@ export default function CustomerPortalForm({ subscription }: Props) {
         </div>
       }
     >
-      <div className="mt-8 mb-4  font-semibold">
+      <div className="mt-8 mb-4 font-semibold">
         {subscription ? (
           `${subscriptionPrice}/${subscription?.prices?.interval}`
         ) : (

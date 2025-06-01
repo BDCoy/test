@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
-
 import { Button } from "../ui/Button";
 import { toast } from "@/lib/store/toast";
 import { createClient } from "@/utils/supabase/client";
@@ -70,8 +69,8 @@ export function UpdatePassword() {
   });
 
   return (
-    <div className="p-6 bg-white shadow rounded-lg">
-      <h3 className="text-lg font-medium text-upwork-gray mb-6">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <h3 className="text-lg font-semibold text-gray-900 mb-6">
         Update Password
       </h3>
 
@@ -80,7 +79,7 @@ export function UpdatePassword() {
         <div>
           <label
             htmlFor="currentPassword"
-            className="block text-sm font-medium text-upwork-gray"
+            className="block text-sm font-medium text-gray-700"
           >
             Current Password
           </label>
@@ -92,12 +91,12 @@ export function UpdatePassword() {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.currentPassword}
-              className="block w-full rounded-md border-upwork-gray-lighter px-3 py-2 text-upwork-gray shadow-sm focus:border-upwork-green focus:ring-upwork-green"
+              className="block w-full rounded-lg border-gray-200 bg-gray-50 px-4 py-2.5 focus:border-green-500 focus:ring-green-500 pr-10"
             />
             <button
               type="button"
               onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-              className="absolute inset-y-0 right-0 pr-3 flex items-center text-upwork-gray-light hover:text-upwork-gray"
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
             >
               {showCurrentPassword ? (
                 <EyeOff className="h-5 w-5" />
@@ -117,7 +116,7 @@ export function UpdatePassword() {
         <div>
           <label
             htmlFor="newPassword"
-            className="block text-sm font-medium text-upwork-gray"
+            className="block text-sm font-medium text-gray-700"
           >
             New Password
           </label>
@@ -129,12 +128,12 @@ export function UpdatePassword() {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.newPassword}
-              className="block w-full rounded-md border-upwork-gray-lighter px-3 py-2 text-upwork-gray shadow-sm focus:border-upwork-green focus:ring-upwork-green"
+              className="block w-full rounded-lg border-gray-200 bg-gray-50 px-4 py-2.5 focus:border-green-500 focus:ring-green-500 pr-10"
             />
             <button
               type="button"
               onClick={() => setShowNewPassword(!showNewPassword)}
-              className="absolute inset-y-0 right-0 pr-3 flex items-center text-upwork-gray-light hover:text-upwork-gray"
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
             >
               {showNewPassword ? (
                 <EyeOff className="h-5 w-5" />
@@ -150,11 +149,11 @@ export function UpdatePassword() {
           )}
         </div>
 
-        {/* Confirm New Password */}
+        {/* Confirm Password */}
         <div>
           <label
             htmlFor="confirmPassword"
-            className="block text-sm font-medium text-upwork-gray"
+            className="block text-sm font-medium text-gray-700"
           >
             Confirm New Password
           </label>
@@ -166,12 +165,12 @@ export function UpdatePassword() {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.confirmPassword}
-              className="block w-full rounded-md border-upwork-gray-lighter px-3 py-2 text-upwork-gray shadow-sm focus:border-upwork-green focus:ring-upwork-green"
+              className="block w-full rounded-lg border-gray-200 bg-gray-50 px-4 py-2.5 focus:border-green-500 focus:ring-green-500 pr-10"
             />
             <button
               type="button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute inset-y-0 right-0 pr-3 flex items-center text-upwork-gray-light hover:text-upwork-gray"
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
             >
               {showConfirmPassword ? (
                 <EyeOff className="h-5 w-5" />
@@ -187,7 +186,7 @@ export function UpdatePassword() {
           )}
         </div>
 
-        <div className="text-right">
+        <div className="flex justify-end">
           <Button
             type="submit"
             disabled={formik.isSubmitting || !formik.isValid}
